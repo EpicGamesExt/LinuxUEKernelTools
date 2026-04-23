@@ -1,10 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 // SPDX-License-Identifier: GPL-2.0-only
 
-#define TEXT(x) x
 #define UE_LOG_S(...) {printf(__VA_ARGS__); printf("\n");}
 #define UE_LOG_V(format, args) {vfprintf(stdout, format, args);}
-#define UE_LOG(Tag, Verbosity, ...) UE_LOG_S(#Verbosity ": " __VA_ARGS__)
+#define UE_LOGF(Tag, Verbosity, ...) UE_LOG_S(#Verbosity ": " __VA_ARGS__)
 #define PRINTF_ANSI_STR "%s"
 
 #include <bpf/btf.h>

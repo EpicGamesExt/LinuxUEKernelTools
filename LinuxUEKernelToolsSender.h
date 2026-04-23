@@ -76,7 +76,7 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 		}
 		else
 		{
-			UE_LOG(LogUELinuxKernelTools, Error, TEXT("failed to create temp file, errno=%d:%s"), errno, strerror(errno));
+			UE_LOGF(LogUELinuxKernelTools, Error, "failed to create temp file, errno=%d:%s", errno, strerror(errno));
 			return false;
 		}
 	}
@@ -92,7 +92,7 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 			snprintf(Path, sizeof(Path), "/proc/%d", Pid);
 			if (access(Path, F_OK) != 0)
 			{
-				UE_LOG(LogUELinuxKernelTools, Log, TEXT("Connected process %d dead"), Pid);
+				UE_LOGF(LogUELinuxKernelTools, Log, "Connected process %d dead", Pid);
 				ToRemove.emplace(Pid);
 			}
 		}
@@ -118,11 +118,11 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 					const size_t EventCount = fread(Buffer, sizeof(BPFEvent), MAX_EVENTS_PER_PACKET, PendingProcess.TempFile);
 					if (EventCount > 0)
 					{
-						UE_LOG_S(TEXT("flushing %lu events"), EventCount);
+						UE_LOG_S("flushing %lu events", EventCount);
 						const size_t EventsSize = EventCount * sizeof(BPFEvent);
 						if (sendto(Fd, Buffer, EventsSize, 0, (const struct sockaddr*)&PendingProcess.Address, sizeof(PendingProcess.Address)) != EventsSize)
 						{
-							UE_LOG_S(TEXT("sendto failed while sending buffered events, errno=%d:%s"), errno, strerror(errno));
+							UE_LOG_S("sendto failed while sending buffered events, errno=%d:%s", errno, strerror(errno));
 						}
 					}
 
@@ -145,7 +145,7 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 				snprintf(Path, sizeof(Path), "/proc/%d", Pid);
 				if (access(Path, F_OK) != 0)
 				{
-					UE_LOG(LogUELinuxKernelTools, Log, TEXT("Pending connection pid %d dead"), Pid);
+					UE_LOGF(LogUELinuxKernelTools, Log, "Pending connection pid %d dead", Pid);
 					ToRemove.emplace(Pid);
 				}
 			}
