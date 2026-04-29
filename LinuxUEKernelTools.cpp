@@ -25,9 +25,9 @@ static uint32_t GetLinuxVersionCodeRuntime();
 void PrintHelp()
 {
 #if DEBUG
-	UE_LOG_S("Usage:\n./UELinuxKernelTools -ParentProcessName <name> [-SocketBasePath <path> -PrintEventsToConsole -PrintEventsToFile]");
+	UE_LOG_S("Usage:\n./LinuxUEKernelTools -ParentProcessName <name> [-SocketBasePath <path> -PrintEventsToConsole -PrintEventsToFile]");
 #else
-	UE_LOG_S("Usage:\n./UELinuxKernelTools -ParentProcessName <name> [-SocketBasePath <path>]");
+	UE_LOG_S("Usage:\n./LinuxUEKernelTools -ParentProcessName <name> [-SocketBasePath <path>]");
 #endif
 }
 

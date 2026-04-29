@@ -76,7 +76,7 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 		}
 		else
 		{
-			UE_LOGF(LogUELinuxKernelTools, Error, "failed to create temp file, errno=%d:%s", errno, strerror(errno));
+			UE_LOGF(LogLinuxUEKernelTools, Error, "failed to create temp file, errno=%d:%s", errno, strerror(errno));
 			return false;
 		}
 	}
@@ -92,7 +92,7 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 			snprintf(Path, sizeof(Path), "/proc/%d", Pid);
 			if (access(Path, F_OK) != 0)
 			{
-				UE_LOGF(LogUELinuxKernelTools, Log, "Connected process %d dead", Pid);
+				UE_LOGF(LogLinuxUEKernelTools, Log, "Connected process %d dead", Pid);
 				ToRemove.emplace(Pid);
 			}
 		}
@@ -145,7 +145,7 @@ struct LinuxUEKernelToolsIPCSender : public LinuxUEKernelToolsIPC
 				snprintf(Path, sizeof(Path), "/proc/%d", Pid);
 				if (access(Path, F_OK) != 0)
 				{
-					UE_LOGF(LogUELinuxKernelTools, Log, "Pending connection pid %d dead", Pid);
+					UE_LOGF(LogLinuxUEKernelTools, Log, "Pending connection pid %d dead", Pid);
 					ToRemove.emplace(Pid);
 				}
 			}
