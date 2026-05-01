@@ -8,6 +8,7 @@
 
 #include <bpf/btf.h>
 #include <dirent.h>
+#include <linux/capability.h>
 #include <linux/version.h>
 #include <memory>
 #include <signal.h>
@@ -97,11 +98,24 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	if (geteuid() != 0)
 	{
-		UE_LOG_S("WARNING! Not running as root");
+		uint64_t CapEff = 0;
+		FILE* f = fopen("/proc/self/status", "r");
+		if (f)
+		{
+			char line[128];
+			while (fgets(line, sizeof(line), f))
+			{
+				if (sscanf(line, "CapEff: %lx", &CapEff) == 1)
+					break;
+			}
+			fclose(f);
+		}
+		if (!(CapEff & (1ULL << CAP_BPF)) || !(CapEff & (1ULL << CAP_PERFMON)))
+		{
+			UE_LOG_S("WARNING! Missing CAP_BPF or CAP_PERFMON capabilities");
+		}
 	}
-	UE_LOG_S("getuid() = %i geteuid() = %i", getuid(), geteuid());
 
 	const uint32_t LinuxVersionCode = GetLinuxVersionCodeRuntime();
 	UE_LOG_S("LinuxVersionCode = %u", LinuxVersionCode);
