@@ -77,8 +77,15 @@ build_bpf(${CMAKE_CURRENT_SOURCE_DIR}/BPFProgs.c)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBBPF REQUIRED libbpf)
 
+find_library(LIBBPF_STATIC_LIBRARY
+      NAMES libbpf.a
+      HINTS ${LIBBPF_LIBRARY_DIRS}
+	  NO_CMAKE_FIND_ROOT_PATH
+      REQUIRED
+)
+
 target_link_directories(LinuxUEKernelTools PRIVATE ${LIBBPF_LIBRARY_DIRS})
-target_link_libraries(LinuxUEKernelTools PRIVATE ${LIBBPF_LINK_LIBRARIES} elf z)
+target_link_libraries(LinuxUEKernelTools PRIVATE ${LIBBPF_STATIC_LIBRARY} elf z)
 target_include_directories(LinuxUEKernelTools PRIVATE ${LIBBPF_INCLUDE_DIRS})
 
 # make sure the compiler can find gennerated files
