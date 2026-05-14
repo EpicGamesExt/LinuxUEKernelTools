@@ -26,7 +26,7 @@ cmake --build build/release-arm64
 ```
 
 ## Usage:
-Must be run as root. Specify the parent process name to monitor:
+Must be run as root (or user with CAP_BPF and CAP_PERFMON). Specify the parent process name to monitor:
 
 ```sh
 sudo ./LinuxUEKernelTools -ParentProcessName <name> [-SocketBasePath <path>]
