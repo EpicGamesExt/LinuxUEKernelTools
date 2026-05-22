@@ -8,7 +8,7 @@
 
 #include "LinuxUEKernelToolsShared.h"
 
-char LICENSE[] SEC("license") = "Dual BSD/GPL";
+char LICENSE[] SEC("license") = "GPL v2";
 
 const volatile uint64_t NamespaceDevice = 0;
 const volatile uint64_t NamespaceInode = 0;
